@@ -1,0 +1,45 @@
+version: '3'
+services:
+    apache:
+        build: .docker/apache
+        container_name: apache
+        ports:
+          - 80:80
+        volumes:
+          - .docker/config/vhosts:/etc/apache2/sites-enabled
+          - .:/var/www/site
+        depends_on:
+          - php
+
+    mysql:
+        image: mysql:8
+        command:
+          - "--default-authentication-plugin=mysql_native_password"
+          - "--lower_case_table_names=1"
+        container_name: mysql
+        volumes:
+            - .docker/data/db:/var/lib/mysql
+        environment:
+            MYSQL_ROOT_PASSWORD: root
+            MYSQL_DATABASE: database
+            MYSQL_USER: user
+            MYSQL_PASSWORD: secret
+
+    php:
+        build: .docker/php
+        container_name: php
+        volumes:
+          - .:/var/www/site
+        depends_on:
+          - mysql
+
+    phpmyadmin:
+        image: phpmyadmin/phpmyadmin
+        container_name: phpmyadmin
+        environment:
+          PMA_HOST: mysql
+          PMA_PORT: 3306
+        ports:
+            - 8080:80
+        links:
+            - mysql

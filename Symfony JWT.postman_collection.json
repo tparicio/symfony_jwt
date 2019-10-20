@@ -1,0 +1,390 @@
+{
+	"info": {
+		"_postman_id": "366725fe-fae1-44a6-a34d-431bcbc5f9ea",
+		"name": "Symfony JWT",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Register",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "name",
+							"value": "John",
+							"type": "text"
+						},
+						{
+							"key": "email",
+							"value": "johndoe@email.test",
+							"type": "text"
+						},
+						{
+							"key": "username",
+							"value": "johndoe",
+							"type": "text"
+						},
+						{
+							"key": "password",
+							"value": "password",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{serverURL}}/api/register",
+					"host": [
+						"{{serverURL}}"
+					],
+					"path": [
+						"api",
+						"register"
+					]
+				},
+				"description": "Register a user in JWT"
+			},
+			"response": []
+		},
+		{
+			"name": "Check",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"id": "b446b941-8742-4751-bb61-33dae48a97c8",
+						"exec": [
+							"var data = pm.response.json();",
+							"pm.environment.set(\"token\", data.token);"
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "_username",
+							"value": "johndoe",
+							"type": "text"
+						},
+						{
+							"key": "_password",
+							"value": "password",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{serverURL}}/api/login_check",
+					"host": [
+						"{{serverURL}}"
+					],
+					"path": [
+						"api",
+						"login_check"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "List",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{serverURL}}/api/v1/invoice",
+					"host": [
+						"{{serverURL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"invoice"
+					]
+				},
+				"description": "List files in folder"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Invoice",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "{{serverURL}}/api/v1/invoice/1?",
+					"host": [
+						"{{serverURL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"invoice",
+						"1"
+					],
+					"query": [
+						{
+							"key": "invoice",
+							"value": "1",
+							"disabled": true
+						}
+					]
+				},
+				"description": "Get XML invoice content"
+			},
+			"response": []
+		},
+		{
+			"name": "Get Invoice Node",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "node",
+							"value": "InvoiceNumber",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{serverURL}}/api/v1/invoice/1/node",
+					"host": [
+						"{{serverURL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"invoice",
+						"1",
+						"node"
+					]
+				},
+				"description": "Get XML invoice content"
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Invoice Node",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "node",
+							"value": "OrderNumber",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{serverURL}}/api/v1/invoice/1/node",
+					"host": [
+						"{{serverURL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"invoice",
+						"1",
+						"node"
+					]
+				},
+				"description": "Get XML invoice content"
+			},
+			"response": []
+		},
+		{
+			"name": "Add node",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"value": "application/x-www-form-urlencoded",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "node",
+							"value": "OrderNumber",
+							"type": "text"
+						},
+						{
+							"key": "value",
+							"value": "1",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{serverURL}}/api/v1/invoice/1/node/add",
+					"host": [
+						"{{serverURL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"invoice",
+						"1",
+						"node",
+						"add"
+					]
+				},
+				"description": "Get XML invoice content"
+			},
+			"response": []
+		},
+		{
+			"name": "Set node",
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "{{token}}",
+							"type": "string"
+						}
+					]
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/x-www-form-urlencoded"
+					}
+				],
+				"body": {
+					"mode": "urlencoded",
+					"urlencoded": [
+						{
+							"key": "node",
+							"value": "OrderNumber",
+							"type": "text"
+						},
+						{
+							"key": "value",
+							"value": "1",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "{{serverURL}}/api/v1/invoice/1/node/set",
+					"host": [
+						"{{serverURL}}"
+					],
+					"path": [
+						"api",
+						"v1",
+						"invoice",
+						"1",
+						"node",
+						"set"
+					]
+				},
+				"description": "Get XML invoice content"
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}
